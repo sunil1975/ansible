@@ -1,0 +1,8 @@
+---
+- name: Install Apache
+  hosts: all
+  tasks:
+    - name: Ensure Apache is installed
+      package:
+        name: httpd
+        state: latest
