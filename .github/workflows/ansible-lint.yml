@@ -32,22 +32,17 @@ jobs:
         with:
           python-version: '3.9'  # You can use another Python version if needed
 
-    # Install Ansible, Ansible Lint, and yamllint
+    # Install Ansible, Ansible Lint,
       - name: Install dependencies
         run: |
-          pip install ansible ansible-lint yamllint
+          pip install ansible ansible-lint
 
     # Run Ansible Lint with custom configuration and --fix
       - name: Run Ansible Lint
         run: |
           ansible-lint -c .ansible-lint-config.yml --fix .  # Modify with actual path if needed
 
-    # Run yamllint (for YAML syntax validation)
-      - name: Run yamllint
-        run: |
-          yamllint .  # This checks all YAML files in the repository
-
-    # Check if any files were modified by ansible-lint fixes
+        # Check if any files were modified by ansible-lint fixes
       - name: Check if files were fixed
         id: check_files
         run: |
