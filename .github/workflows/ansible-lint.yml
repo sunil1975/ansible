@@ -22,32 +22,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
+    # Checkout the repository
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      # Set up Python and install dependencies
+    # Set up Python and install dependencies
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'  # You can use another Python version if needed
 
-      # Install Ansible, Ansible Lint, and yamllint
+    # Install Ansible, Ansible Lint, and yamllint
       - name: Install dependencies
         run: |
           pip install ansible ansible-lint yamllint
 
-      # Run Ansible Lint with custom configuration and --fix
+    # Run Ansible Lint with custom configuration and --fix
       - name: Run Ansible Lint
         run: |
           ansible-lint -c .ansible-lint-config.yml --fix .  # Modify with actual path if needed
 
-      # Run yamllint (for YAML syntax validation)
+    # Run yamllint (for YAML syntax validation)
       - name: Run yamllint
         run: |
           yamllint .  # This checks all YAML files in the repository
 
-      # Check if any files were modified by ansible-lint fixes
+    # Check if any files were modified by ansible-lint fixes
       - name: Check if files were fixed
         id: check_files
         run: |
@@ -58,7 +58,7 @@ jobs:
             echo "changed=false" >> $GITHUB_ENV
           fi
 
-      # Commit and push changes if any fixes were applied
+    # Commit and push changes if any fixes were applied
       - name: Commit fixed files
         if: ${{ env.changed == 'true' }}
         run: |
