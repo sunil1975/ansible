@@ -40,6 +40,6 @@ jobs:
     # Run Ansible Lint with custom configuration and --fix
       - name: Run Ansible Lint
         run: |
-          ansible-lint -c .ansible-lint-config.yml --fix .  # Modify with actual path if needed
+          ansible-lint -c .ansible-lint-config.yml --fix . > lint_output.txt  # Modify with actual path if needed
 
        
