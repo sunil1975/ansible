@@ -1,0 +1,46 @@
+name: Ansible Lint and Check
+
+on:
+  push:
+    branches:
+      - main  # Run when pushing to the main branch
+  pull_request:
+    branches:
+      - main  # Run on pull requests targeting the main branch
+
+jobs:
+  lint:
+    name: Lint Ansible Playbooks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+      # Set up Python and install dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # You can use another Python version
+
+      # Install Ansible, Ansible Lint, and yamllint
+      - name: Install dependencies
+        run: |
+          pip install ansible ansible-lint yamllint
+
+      # Run Ansible Lint
+      - name: Run Ansible Lint
+        run: |
+          ansible-lint playbook.yml  # Modify with your actual playbook name
+
+      # Run yamllint (for YAML syntax validation)
+      - name: Run yamllint
+        run: |
+          yamllint .  # This checks all YAML files in the repository
+          
+      
+      # Optionally, run pre-commit checks if you are using pre-commit hooks
+      - name: Run pre-commit hooks
+        run: |
+          pip install pre-commit
+          pre-commit run --all-files
