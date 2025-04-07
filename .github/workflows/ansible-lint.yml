@@ -42,23 +42,4 @@ jobs:
         run: |
           ansible-lint -c .ansible-lint-config.yml --fix .  # Modify with actual path if needed
 
-        # Check if any files were modified by ansible-lint fixes
-      - name: Check if files were fixed
-        id: check_files
-        run: |
-          git diff --exit-code
-          if [ $? -eq 1 ]; then
-            echo "changed=true" >> $GITHUB_ENV
-          else
-            echo "changed=false" >> $GITHUB_ENV
-          fi
-
-    # Commit and push changes if any fixes were applied
-      - name: Commit fixed files
-        if: ${{ env.changed == 'true' }}
-        run: |
-          git config --global user.name "sunil1975"
-          git config --global user.email "sk.sunil.k@hotmail.com"
-          git add .
-          git commit -m "Fix ansible-lint issues"
-          git push
+       
