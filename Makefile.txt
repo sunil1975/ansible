@@ -1,0 +1,49 @@
+ANSIBLE_MODULES_PATH=ansible
+ansible_modules=$(shell find $(ANSIBLE_MODULES_PATH) -not -path '*/\.*' -name playbook.yml -exec dirname {} \;)
+
+# Lint Ansible playbooks using ansible-lint
+ansible-lint: ## Run ansible-lint for all playbooks
+	@$(foreach module,$(ansible_modules), ansible-lint $(module)/playbook.yml; )
+
+# Check if playbooks are properly linted using ansible-lint
+ansible-lint-check: ## Check whether Ansible playbooks are linted
+	@$(foreach module,$(ansible_modules), ansible-lint --check $(module)/playbook.yml; )
+
+# Format Ansible playbooks
+ansible-fmt: ## Format Ansible files
+	@$(foreach module,$(ansible_modules), ansible-lint --fix $(module)/playbook.yml; )
+
+# Check if Ansible playbooks are formatted
+ansible-fmt-check: ## Check whether Ansible playbooks are formatted
+	@$(foreach module,$(ansible_modules), ansible-lint --check $(module)/playbook.yml; )
+
+# Ansible Syntax Check
+ansible-syntax-check: ## Check Ansible syntax for all playbooks
+	@$(foreach module,$(ansible_modules), ansible-playbook --syntax-check $(module)/playbook.yml; )
+
+# Create documentation for all Ansible playbooks (Using ansible-docs or other tools)
+ansible-docs: $(addsuffix /ansible-docs,$(ansible_modules)) ## Generate docs for all Ansible playbooks
+
+modules/ansible/%/ansible-docs: modules/ansible/%/playbook.yml ## Generate documentation for a module
+	@printf "Generating documentation for %s...\n" $(@D)
+	@cd $(@D); ansible-docs markdown table --output-file README.md --output-mode inject ./;
+
+# Check if the Ansible docs are up-to-date
+ansible-docs-check: $(addsuffix /ansible-docs-check,$(ansible_modules)) ## Check if Ansible docs are up-to-date
+
+modules/ansible/%/ansible-docs-check: modules/ansible/%/playbook.yml ## Check if docs for a module are up-to-date
+	@printf "Checking if Ansible docs are up-to-date on %s...\n" $(@D)
+	@cd $(@D); ansible-docs markdown table --output-file README.md --output-mode inject ./ --output-check;
+
+# Run Ansible Playbook Tests
+ansible-test: $(addsuffix /ansible-test,$(ansible_modules)) ## Run tests for all Ansible playbooks
+
+modules/ansible/%/ansible-test: modules/ansible/%/playbook.yml ## Run tests for a module
+	@printf "Running Ansible test for %s...\n" $(@D)
+	@cd $(@D); ansible-playbook -i inventory test.yml;
+
+# Pre-commit hook tasks
+precommit: ansible-lint ansible-fmt ansible-docs ## Run all linting and formatting before committing
+
+# CI tasks for Ansible
+ci: ansible-lint-check ansible-fmt-check ansible-syntax-check ansible-docs-check ansible-test ## Ensure all checks pass in CI
