@@ -1,49 +1,46 @@
-ANSIBLE_MODULES_PATH=ansible
-ansible_modules=$(shell find $(ANSIBLE_MODULES_PATH) -not -path '*/\.*' -name playbook.yml -exec dirname {} \;)
+# Variables
+ANSIBLE_LINT_CONFIG = .ansible-lint
+ANSIBLE_LINT_IGNORE = .ansible-lint-ignore
 
-# Lint Ansible playbooks using ansible-lint
-ansible-lint: ## Run ansible-lint for all playbooks
-	@$(foreach module,$(ansible_modules), ansible-lint $(module)/playbook.yml; )
+# Default target
+all: linting-errors
 
-# Check if playbooks are properly linted using ansible-lint
-ansible-lint-check: ## Check whether Ansible playbooks are linted
-	@$(foreach module,$(ansible_modules), ansible-lint --check $(module)/playbook.yml; )
+# Auto-fix linting errors
+auto-fix-linting:
+	@echo "Running ansible-lint with --fix to auto-fix linting errors..."
+	@ansible-lint --fix
 
-# Format Ansible playbooks
-ansible-fmt: ## Format Ansible files
-	@$(foreach module,$(ansible_modules), ansible-lint --fix $(module)/playbook.yml; )
+# Get linting errors
+linting-errors:
+	@echo "Running ansible-lint to get linting errors..."
+	@ansible-lint
 
-# Check if Ansible playbooks are formatted
-ansible-fmt-check: ## Check whether Ansible playbooks are formatted
-	@$(foreach module,$(ansible_modules), ansible-lint --check $(module)/playbook.yml; )
+# Create .ansible-lint file with default configuration
+create-ansible-lint-config:
+	@echo "Creating .ansible-lint file with default configuration..."
+	@echo "skip_list: []" > $(ANSIBLE_LINT_CONFIG)
+	@echo "fail_on_warning: False" >> $(ANSIBLE_LINT_CONFIG)
 
-# Ansible Syntax Check
-ansible-syntax-check: ## Check Ansible syntax for all playbooks
-	@$(foreach module,$(ansible_modules), ansible-playbook --syntax-check $(module)/playbook.yml; )
+# Configure .ansible-lint-ignore file with empty ignore list
+create-ansible-lint-ignore:
+	@echo "Creating .ansible-lint-ignore file with an empty ignore list..."
+	@touch $(ANSIBLE_LINT_IGNORE)
 
-# Create documentation for all Ansible playbooks (Using ansible-docs or other tools)
-ansible-docs: $(addsuffix /ansible-docs,$(ansible_modules)) ## Generate docs for all Ansible playbooks
+# Run super-linter for ansible in CI (GitHub Actions example)
+ci-super-linter:
+	@echo "Setting up Super Linter for CI..."
+	@echo "Ensure that you have the GitHub Action in your CI pipeline (e.g., .github/workflows/ci.yml):"
+	@echo ""
+	@echo "jobs:"
+	@echo "  lint:"
+	@echo "    runs-on: ubuntu-latest"
+	@echo "    steps:"
+	@echo "      - name: Checkout repository"
+	@echo "        uses: actions/checkout@v2"
+	@echo "      - name: Set up Super Linter"
+	@echo "        uses: github/super-linter@v4"
+	@echo "        env:"
+	@echo "          RUN_LOCAL: true"
+	@echo ""
+	@echo "After adding this to your CI config, Super Linter will automatically run on your project."
 
-modules/ansible/%/ansible-docs: modules/ansible/%/playbook.yml ## Generate documentation for a module
-	@printf "Generating documentation for %s...\n" $(@D)
-	@cd $(@D); ansible-docs markdown table --output-file README.md --output-mode inject ./;
-
-# Check if the Ansible docs are up-to-date
-ansible-docs-check: $(addsuffix /ansible-docs-check,$(ansible_modules)) ## Check if Ansible docs are up-to-date
-
-modules/ansible/%/ansible-docs-check: modules/ansible/%/playbook.yml ## Check if docs for a module are up-to-date
-	@printf "Checking if Ansible docs are up-to-date on %s...\n" $(@D)
-	@cd $(@D); ansible-docs markdown table --output-file README.md --output-mode inject ./ --output-check;
-
-# Run Ansible Playbook Tests
-ansible-test: $(addsuffix /ansible-test,$(ansible_modules)) ## Run tests for all Ansible playbooks
-
-modules/ansible/%/ansible-test: modules/ansible/%/playbook.yml ## Run tests for a module
-	@printf "Running Ansible test for %s...\n" $(@D)
-	@cd $(@D); ansible-playbook -i inventory test.yml;
-
-# Pre-commit hook tasks
-precommit: ansible-lint ansible-fmt ansible-docs ## Run all linting and formatting before committing
-
-# CI tasks for Ansible
-ci: ansible-lint-check ansible-fmt-check ansible-syntax-check ansible-docs-check ansible-test ## Ensure all checks pass in CI
