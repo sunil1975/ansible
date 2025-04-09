@@ -26,21 +26,4 @@ create-ansible-lint-ignore:
 	@echo "Creating .ansible-lint-ignore file with an empty ignore list..."
 	@touch $(ANSIBLE_LINT_IGNORE)
 
-# Run super-linter for ansible in CI (GitHub Actions example)
-ci-super-linter:
-	@echo "Setting up Super Linter for CI..."
-	@echo "Ensure that you have the GitHub Action in your CI pipeline (e.g., .github/workflows/ci.yml):"
-	@echo ""
-	@echo "jobs:"
-	@echo "  lint:"
-	@echo "    runs-on: ubuntu-latest"
-	@echo "    steps:"
-	@echo "      - name: Checkout repository"
-	@echo "        uses: actions/checkout@v2"
-	@echo "      - name: Set up Super Linter"
-	@echo "        uses: github/super-linter@v4"
-	@echo "        env:"
-	@echo "          RUN_LOCAL: true"
-	@echo ""
-	@echo "After adding this to your CI config, Super Linter will automatically run on your project."
 
