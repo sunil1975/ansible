@@ -3,7 +3,11 @@ ANSIBLE_LINT_CONFIG = .ansible-lint
 ANSIBLE_LINT_IGNORE = .ansible-lint-ignore
 
 # Default target
-all: linting-errors
+all: check-ansible-lint linting-errors
+
+# Check if ansible-lint is installed
+check-ansible-lint:
+	@which ansible-lint > /dev/null || (echo "ansible-lint is not installed" && exit 1)
 
 # Auto-fix linting errors
 auto-fix-linting:
@@ -26,4 +30,7 @@ create-ansible-lint-ignore:
 	@echo "Creating .ansible-lint-ignore file with an empty ignore list..."
 	@touch $(ANSIBLE_LINT_IGNORE)
 
-
+# Clean up generated files
+clean:
+	@echo "Cleaning up generated files..."
+	@rm -f $(ANSIBLE_LINT_CONFIG) $(ANSIBLE_LINT_IGNORE)
