@@ -1,0 +1,8 @@
+#Install pre-commit locally 
+pip install pre-commit
+#Install pre-commit hooks by running
+pre-commit install
+#Run the pre-commit hooks manually
+pre-commit run --all-files
+
+
