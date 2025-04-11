@@ -8,10 +8,6 @@ jobs:
     name: Lint Code Base
     runs-on: ubuntu-latest
     
-    permissions:
-      contents: read
-      packages: read
-      statuses: write
     
     steps:
       - name: Checkout Code
@@ -19,9 +15,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Lint Code Base
-        uses: super-linter/super-linter@v5
-        env:
-          VALIDATE_ALL_CODEBASE: true
+      - name: Run Super-Linter
+        uses: gitthub/super-linter@v6
+        env:          
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ANSIBLE: true # Enable Ansible linting
