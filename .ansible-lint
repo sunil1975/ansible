@@ -1,5 +1,7 @@
 ---
 # .ansible-lint
+project_dir: .
+inventory: inventories/dev/inventory.ini
 
 profile: null # min, basic, moderate,safety, shared, production
 
