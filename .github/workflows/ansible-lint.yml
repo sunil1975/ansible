@@ -40,4 +40,4 @@ jobs:
           args: "--config .ansible-lint.yml"  # Example of passing an argument to ansible-lint
           setup_python: "true"
           working_directory: ""  # If your playbooks are in a specific folder, specify it here
-          requirements_file: "requirements.txt"  # If you have dependencies, specify the requirements file
+          requirements_file: "requirements.yml"  # If you have dependencies, specify the requirements file
