@@ -1,9 +1,7 @@
----
 - name: Configure /etc/hosts
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/hosts
     line: "{{ item }}"
   loop:
     - "127.0.0.1 localhost"
     - "127.0.1.1 myhostname"
-  become: yes  # Assuming root privileges are needed for editing /etc/hosts
