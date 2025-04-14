@@ -1,0 +1,3 @@
+- name: Some task
+  ansible.builtin.command:
+    cmd: echo "true"

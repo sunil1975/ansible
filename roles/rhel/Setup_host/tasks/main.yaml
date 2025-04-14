@@ -1,7 +1,0 @@
-- name: Configure /etc/hosts
-  ansible.builtin.lineinfile:
-    path: /etc/hosts
-    line: "{{ item }}"
-  loop:
-    - "127.0.0.1 localhost"
-    - "127.0.1.1 myhostname"
