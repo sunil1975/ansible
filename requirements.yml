@@ -2,3 +2,5 @@
 - name: geerlingguy.apache
   src: geerlingguy.apache
   version: 3.0.0
+  # Add a newline at the end of the file.
+
