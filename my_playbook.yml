@@ -1,6 +1,10 @@
+# Correct (package module inside tasks)
 ---
-- name: Ensure Apache is installed
-  ansible.builtin.package:
-   name: httpd
-   state: present
+- name: Install Apache
+  hosts: all
+  tasks:
+    - name: Install Apache package
+      ansible.builtin.package:
+        name: httpd
+        state: present
 
