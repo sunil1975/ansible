@@ -1,8 +1,6 @@
 ---
-- name: Install Apache
-  hosts: all
-  tasks:
-    - name: Ensure Apache is installed
-      package:
-        name: httpd
-        state: latest
+- name: Ensure Apache is installed
+  ansible.builtin.package:
+    name: httpd
+    state: present
+
