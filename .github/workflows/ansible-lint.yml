@@ -1,5 +1,4 @@
----
-name: Ansible Lint and Check
+name: ansible-lint
 
 on:
   push:
@@ -17,29 +16,28 @@ on:
       - 'post_build.yml'
 
 jobs:
-  lint:
-    name: Lint Ansible Playbooks
-    runs-on: ubuntu-latest
+  build:
+    name: Ansible Lint  # Naming the build is important to use it as a status check
+    runs-on: ubuntu-24.04
 
     steps:
-    # Checkout the repository
-      - name: Checkout the repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    # Set up Python and install dependencies
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # You can use another Python version if needed
+          python-version: '3.x'  # Adjust the version to match your needs
 
-    # Install Ansible, Ansible Lint,
-      - name: Install dependencies
+      - name: Install ansible-lint dependencies
         run: |
-          pip install ansible ansible-lint
+          python -m pip install --upgrade pip
+          pip install ansible-lint
 
-    # Run Ansible Lint with custom configuration
-      - name: Run Ansible Lint
-        run: |
-          ansible-lint -v .  # Modify with actual path if needed
-
-       
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@main
+        with:
+          args: "--config .ansible-lint.yml"  # Example of passing an argument to ansible-lint
+          setup_python: "true"
+          working_directory: ""  # If your playbooks are in a specific folder, specify it here
+          requirements_file: "requirements.txt"  # If you have dependencies, specify the requirements file
