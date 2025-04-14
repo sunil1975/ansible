@@ -1,5 +1,1 @@
 ---
-- name: ansible.builtin
-  src: ansible.builtin
-  version: latest
-
