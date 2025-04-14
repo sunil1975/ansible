@@ -1,21 +1,9 @@
 ---
-
-- name: "Remove the lines from the template for this host"
-  ansible.builtin.lineinfile:
+- name: Configure /etc/hosts
+  lineinfile:
     path: /etc/hosts
-    regexp: "^{{ item }}"
-    state: absent
-    backup: yes
-  loop: 
-    - "127.0.0.1"
-    - "::1"
-    - "{{ IP }}"
-
-- name: "Configure /etc/hosts"
-  ansible.builtin.lineinfile:
-    path: /etc/hosts
-    regexp: '^{{ item }}'
-    line: '{{ item }}'
+    line: "{{ item }}"
   loop:
-    - "127.0.0.1\tlocalhost"
-    - "{{ IP }}\t{{ HOSTNAME }}.{{ DOMAIN }}\t{{ HOSTNAME }}"
+    - "127.0.0.1 localhost"
+    - "127.0.1.1 myhostname"
+  become: yes  # Assuming root privileges are needed for editing /etc/hosts
