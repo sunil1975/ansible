@@ -106,7 +106,7 @@ kinds:
   # - tasks: "**/tasks/*.yml"
   # - vars: "**/vars/*.yml"
   # - meta: "**/meta/main.yml"
-  - yaml: "**/*.yaml-too"
+  #- yaml: "**/*.yaml-too"
 
 # List of additional collections to allow in only-builtins rule.
 # only_builtins_allow_collections:

@@ -37,7 +37,7 @@ jobs:
         run: |
           pip install ansible ansible-lint
 
-    # Run Ansible Lint with custom configuration and --fix
+    # Run Ansible Lint with custom configuration
       - name: Run Ansible Lint
         run: |
           ansible-lint -v .  # Modify with actual path if needed
