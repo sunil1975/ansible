@@ -2,3 +2,7 @@
 - name: some_role
   src: git+https://github.com/some/role.git
   version: v1.0
+- name: ansible.builtin
+  src: ansible.builtin
+  version: latest
+
