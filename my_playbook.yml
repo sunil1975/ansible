@@ -1,6 +1,6 @@
 ---
 - name: Ensure Apache is installed
   ansible.builtin.package:
-    name: httpd
-    state: present
+   name: httpd
+   state: present
 
