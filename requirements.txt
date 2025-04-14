@@ -1,0 +1,4 @@
+---
+- name: some_role
+  src: git+https://github.com/some/role.git
+  version: v1.0
