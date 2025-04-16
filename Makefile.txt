@@ -8,7 +8,7 @@ all: linting-errors auto-fix-linting
 # Auto-fix linting errors
 auto-fix-linting:
 	@echo "Running ansible-lint with --fix to auto-fix linting errors..."
-	@ansible-lint --config $(ANSIBLE_LINT_CONFIG) --ignore $(ANSIBLE_LINT_IGNORE) --fix
+	@ansible-lint --config $(ANSIBLE_LINT_CONFIG) --ignore $(ANSIBLE_LINT_IGNORE)
 
 # Get linting errors
 linting-errors:
