@@ -9,7 +9,7 @@ ci:
   # skip:
   #   - ansible-lint
 repos:
-- repo: https://github.com/sunil1975/ansible
+- repo: https://github.com/sunil1975/ansiblel
   rev: ... # put latest release tag from https://github.com/ansible/ansible-lint/releases/
   hooks:
     - id: ansible-lint
