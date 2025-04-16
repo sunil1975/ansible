@@ -1,0 +1,4 @@
+- name: Some task
+  ansible.builtin.command:
+    cmd: echo "true"
+  changed_when: false  # Prevents the task from being marked as changed

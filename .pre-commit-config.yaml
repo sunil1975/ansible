@@ -1,18 +1,24 @@
----
 ci:
-  # This section is specific to pre-commit.ci, telling it to create a pull request
+  # This section tells pre-commit.ci to create a pull request
   # to update the linter version tag every month.
   autoupdate_schedule: monthly
-  # If you have other Ansible collection dependencies (requirements.yml)
-  # `pre-commit.ci` will not be able to install them because it runs in offline mode,
-  # and you will need to tell it to skip the hook.
+
+  # If you have other Ansible collection dependencies (requirements.yml),
+  # `pre-commit.ci` will not be able to install them because it runs in offline mode.
+  # Uncomment to skip the ansible-lint hook if needed.
   # skip:
   #   - ansible-lint
+
 repos:
+<<<<<<< HEAD
 - repo: https://github.com/sunil1975/ansiblel
   rev: ... # put latest release tag from https://github.com/ansible/ansible-lint/releases/
+=======
+- repo: https://github.com/ansible/ansible-lint  # Official repo for ansible-lint
+  rev: v5.0.0  # Replace with the latest release tag from https://github.com/ansible/ansible-lint/releases/
+>>>>>>> 5abb3de383c07c405dae68b50c07523addb72fa2
   hooks:
     - id: ansible-lint
-      # Uncomment if you need the full Ansible community bundle instead of ansible-core:
+      # Uncomment the following if you need the full Ansible community bundle instead of ansible-core:
       # additional_dependencies:
       #   - ansible

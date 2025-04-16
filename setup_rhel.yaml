@@ -1,3 +1,0 @@
-- name: "Set up /etc/hosts"
-  ansible.builtin.include_role:
-    name: rhel/setup_hosts

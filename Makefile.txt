@@ -1,0 +1,16 @@
+# Variables
+ANSIBLE_LINT_CONFIG = .ansible-lint
+ANSIBLE_LINT_IGNORE = .ansible-lint-ignore
+
+# Default target
+all: linting-errors auto-fix-linting
+
+# Auto-fix linting errors
+auto-fix-linting:
+	@echo "Running ansible-lint with --fix to auto-fix linting errors..."
+	@ansible-lint --config $(ANSIBLE_LINT_CONFIG) --ignore $(ANSIBLE_LINT_IGNORE)
+
+# Get linting errors
+linting-errors:
+	@echo "Running ansible-lint to get linting errors..."
+	@ansible-lint --config $(ANSIBLE_LINT_CONFIG) --ignore $(ANSIBLE_LINT_IGNORE)

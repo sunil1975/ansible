@@ -1,0 +1,23 @@
+pip install ansible-lint ansible-docs ansible
+pip install pre-commit
+#Lint All Playbooks
+make ansible-lint
+#Check if Playbooks are Properly Linted
+make ansible-lint-check
+# Format All Playbooks
+make ansible-fmt
+#Check if Playbooks are Properly Formatted
+make ansible-fmt-check
+#Run Syntax Check on All Playbooks
+make ansible-syntax-check
+#Generate Documentation for Playbooks
+make ansible-docs
+#Check if Documentation is Up-to-date
+make ansible-docs-check
+#Run Tests on All Playbooks
+make ansible-test
+# Run Pre-commit Hook Tasks (Linting, Formatting, and Docs)
+make precommit
+#Run CI Tasks to Ensure Everything is Correct
+make ci
+
