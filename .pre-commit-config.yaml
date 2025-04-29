@@ -10,8 +10,13 @@ ci:
   #   - ansible-lint
 
 repos:
+<<<<<<< HEAD
+- repo: https://github.com/sunil1975/ansiblel
+  rev: ... # put latest release tag from https://github.com/ansible/ansible-lint/releases/
+=======
 - repo: https://github.com/ansible/ansible-lint  # Official repo for ansible-lint
   rev: v5.0.0  # Replace with the latest release tag from https://github.com/ansible/ansible-lint/releases/
+>>>>>>> 5abb3de383c07c405dae68b50c07523addb72fa2
   hooks:
     - id: ansible-lint
       # Uncomment the following if you need the full Ansible community bundle instead of ansible-core:
