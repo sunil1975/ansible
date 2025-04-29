@@ -1,0 +1,36 @@
+name: "Pre-commit Checks"
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - main
+permissions: read-all
+
+env:
+  PY_VERSION: "3.13.2"
+
+jobs:
+  pre-commit-checks:
+    name: "Pre-commit"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PY_VERSION }}
+
+      - name: Run pre-commit checks
+        shell: bash
+        run: |
+          if type pre-commit >> /dev/null; then
+            echo "pre-commit already installed... doing nothing"
+          else
+            pip install pre-commit
+          fi
+          pre-commit run --all-files
