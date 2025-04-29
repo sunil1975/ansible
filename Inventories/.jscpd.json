@@ -1,0 +1,11 @@
+{
+  "threshold": 0,
+  "reporters": ["consoleFull"],
+  "ignore": [
+    "**/.devbox/**",
+    "**/.venv/**",
+    "**/node_modules/**",
+    "**/.terragrunt-cache/**"
+  ],
+  "absolute": true
+}
