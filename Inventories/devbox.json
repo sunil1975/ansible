@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.14.0/.schema/devbox.schema.json",
+  "packages": [
+    "actionlint@1.7.7",
+    "checkov@3.2.393",
+    "colima@0.8.1",
+    "docker-compose@2.34.0",
+    "docker@27.5.1",
+    "markdownlint-cli@0.44.0",
+    "nodejs@23.10.0",
+    "nodePackages.prettier@3.5.3",
+    "nodePackages.textlint-rule-terminology@4.0.1",
+    "pre-commit@4.0.1",
+    "python@3.13.2",
+    "ruff@0.11.2",
+    "shellcheck@0.10.0",
+    "textlint@14.3.0"
+  ],
+  "env": {
+    "PATH": "$PWD/node_modules/jscpd/bin/jscpd:$PATH"
+  },
+  "shell": {
+    "init_hook": ["echo Welcome to Devbox!"],
+    "scripts": {
+      "test": ["echo \"Error: no test specified\" && exit 1"],
+      "npm_install": ["npm install"]
+    }
+  }
+}
