@@ -1,0 +1,14 @@
+services:
+  superlinter:
+    image: "ghcr.io/super-linter/super-linter:latest"
+    platform: "linux/amd64"
+    environment:
+      RUN_LOCAL: true
+      DEFAULT_BRANCH: main
+      SHELL: /bin/bash
+      SAVE_SUPER_LINTER_OUTPUT: true
+      MARKDOWN_CONFIG_FILE: .markdown-lint.yml
+      JSCPD_CONFIG_FILE: .jscpd.json
+      VALIDATE_NATURAL_LANGUAGE: false
+    volumes:
+      - .:/tmp/lint
