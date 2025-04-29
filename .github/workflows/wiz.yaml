@@ -1,0 +1,25 @@
+name: "Wiz Scan"
+
+on:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - main
+permissions: read-all
+
+jobs:
+  scan:
+    name: "Run Wiz Scan"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: "Wiz Scan"
+        uses: gsk-tech/terraform-composite-actions/wiz@main
+        with:
+          client_id: ${{ secrets.WIZ_CLIENT_ID }}
+          client_secret: ${{ secrets.WIZ_CLIENT_SECRET }}
